@@ -1,0 +1,93 @@
+superheroes = [
+    {"nombre": "Linterna Verde", "año_aparicion": 1940, "casa_comic": "DC", "biografia": "Biografía de Linterna Verde"},
+    {"nombre": "Wolverine", "año_aparicion": 1974, "casa_comic": "Marvel", "biografia": "Biografía de Wolverine"},
+    {"nombre": "Dr. Strange", "año_aparicion": 1963, "casa_comic": "DC", "biografia": "Biografía de Dr. Strange"},
+    {"nombre": "Capitana Marvel", "año_aparicion": 1968, "casa_comic": "Marvel", "biografia": "Biografía de Capitana Marvel"},
+    {"nombre": "Mujer Maravilla", "año_aparicion": 1941, "casa_comic": "DC", "biografia": "Biografía de Mujer Maravilla"},
+    {"nombre": "Flash", "año_aparicion": 1940, "casa_comic": "DC", "biografia": "Biografía de Flash con traje rojo"},
+    {"nombre": "Star-Lord", "año_aparicion": 1976, "casa_comic": "Marvel", "biografia": "Biografía de Star-Lord con armadura"}
+]
+
+def eliminar_superheroe(nombre):
+    global superheroes
+    superheroes = [sh for sh in superheroes if sh["nombre"] != nombre]
+
+def obtener_año_aparicion(nombre):
+    for sh in superheroes:
+        if sh["nombre"] == nombre:
+            return sh["año_aparicion"]
+    return None
+
+def cambiar_casa_comic(nombre, nueva_casa):
+    for sh in superheroes:
+        if sh["nombre"] == nombre:
+            sh["casa_comic"] = nueva_casa
+
+def buscar_por_palabras_en_biografia(palabras):
+    resultado = []
+    for sh in superheroes:
+        if any(palabra in sh["biografia"] for palabra in palabras):
+            resultado.append(sh["nombre"])
+    return resultado
+
+def superheroes_antes_de(año):
+    resultado = []
+    for sh in superheroes:
+        if sh["año_aparicion"] < año:
+            resultado.append((sh["nombre"], sh["casa_comic"]))
+    return resultado
+
+def obtener_casa_comic(nombres):
+    resultado = {}
+    for sh in superheroes:
+        if sh["nombre"] in nombres:
+            resultado[sh["nombre"]] = sh["casa_comic"]
+    return resultado
+
+def mostrar_informacion(nombres):
+    resultado = []
+    for sh in superheroes:
+        if sh["nombre"] in nombres:
+            resultado.append(sh)    
+    return resultado
+
+def listar_superheroes_por_letra(letras):
+    resultado = []
+    for sh in superheroes:
+        if sh["nombre"][0] in letras:
+            resultado.append(sh["nombre"])
+    return resultado
+
+def contar_superheroes_por_casa():
+    conteo = {"Marvel": 0, "DC": 0}
+    for sh in superheroes:
+        if sh["casa_comic"] in conteo:
+            conteo[sh["casa_comic"]] += 1
+    return conteo
+
+# A. Eliminar el nodo que contiene la información de Linterna Verde
+eliminar_superheroe("Linterna Verde")
+
+# B. Mostrar el año de aparición de Wolverine
+print("Año de aparición de Wolverine:", obtener_año_aparicion("Wolverine"))
+
+# C. Cambiar la casa de Dr. Strange a Marvel
+cambiar_casa_comic("Dr. Strange", "Marvel")
+
+# D. Mostrar el nombre de aquellos superhéroes que en su biografía mencionan la palabra “traje” o “armadura”
+print("Superhéroes que mencionan 'traje' o 'armadura' en su biografía:", buscar_por_palabras_en_biografia(["traje", "armadura"]))
+
+# E. Mostrar el nombre y la casa de los superhéroes cuya fecha de aparición sea anterior a 1963
+print("Superhéroes con fecha de aparición anterior a 1963:", superheroes_antes_de(1963))
+
+# F. Mostrar la casa a la que pertenece Capitana Marvel y Mujer Maravilla
+print("Casa de Capitana Marvel y Mujer Maravilla:", obtener_casa_comic(["Capitana Marvel", "Mujer Maravilla"]))
+
+# G. Mostrar toda la información de Flash y Star-Lord
+print("Información de Flash y Star-Lord:", mostrar_informacion(["Flash", "Star-Lord"]))
+
+# H. Listar los superhéroes que comienzan con la letra B, M y S
+print("Superhéroes que comienzan con B, M y S:", listar_superheroes_por_letra(['B', 'M', 'S']))
+
+# I. Determinar cuántos superhéroes hay de cada casa de comic
+print("Conteo de superhéroes por casa de comic:", contar_superheroes_por_casa())
